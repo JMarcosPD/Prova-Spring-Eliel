@@ -39,4 +39,8 @@ public class PadariaService {
         return padariaRepository.save(padariaAtual);
 
     }
+
+    public PadariaModel buscarPorNome(String nome){
+        return padariaRepository.findByNome(nome).get();
+    }
 }

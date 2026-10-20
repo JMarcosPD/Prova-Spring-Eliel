@@ -45,4 +45,9 @@ public class PadariaController {
         PadariaModel response = padariaService.buscarPorId(id);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/nome/{nome}")
+    public PadariaModel buscarPorNome(@PathVariable String nome){
+        return padariaService.buscarPorNome(nome);
+    }
 }
