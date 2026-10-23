@@ -1,11 +1,13 @@
 package com.example.provaspring.Models;
 
+import com.example.provaspring.Enum.Perfil;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -20,12 +22,10 @@ public class PadariaModel implements UserDetails {
     private String nome;
     private String endereco;
     private String senha;
+    private Perfil role;
 
-
-
-    public PadariaModel(){
-
-    }
+    
+    public PadariaModel(){}
 
     public Long getId() {
         return id;
@@ -59,9 +59,19 @@ public class PadariaModel implements UserDetails {
         this.senha = senha;
     }
 
+    public Perfil getRole() {
+        return role;
+    }
+
+    public void setRole(Perfil role) {
+        this.role = role;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        if (this.role == Perfil.ADMIN) return
+            List.of(new SimpleGrantedAuthority("ADMIN"), new SimpleGrantedAuthority("USER"));
+        else return List.of(new SimpleGrantedAuthority("USER"));
     }
 
     @Override
@@ -73,4 +83,7 @@ public class PadariaModel implements UserDetails {
     public String getUsername() {
         return nome;
     }
+
+
+
 }
